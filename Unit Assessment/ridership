@@ -1,0 +1,41 @@
+DROP TABLE IF EXISTS sys_info;
+CREATE TABLE sys_info (
+	stop_id INT NOT NULL,
+	direction_id VARCHAR NOT NULL,
+	stop_name VARCHAR NOT NULL,
+	station_name VARCHAR NOT NULL,
+	station_descriptive_name VARCHAR NOT NULL,
+	map_id INT NOT NULL,
+	ada BOOL NOT NULL,
+	red BOOL NOT NULL,
+	blue BOOL NOT NULL,
+	g BOOL NOT NULL,
+	brn BOOL NOT NULL,
+	p BOOL NOT NULL,
+	pexp BOOL NOT NULL,
+	y BOOL NOT NULL,
+	pnk BOOL NOT NULL,
+	o BOOL NOT NULL,
+	location POINT NOT NULL,
+PRIMARY KEY (stop_id)
+);
+
+SELECT * FROM sys_info;
+
+DROP TABLE IF EXISTS ridership;
+CREATE TABLE ridership (
+	station_id INT NOT NULL,
+	stationname VARCHAR NOT NULL,
+	date DATE NOT NULL,
+	daytype VARCHAR NOT NULL,
+	rides INT NOT NULL
+	);
+SELECT * FROM ridership;
+
+station_bools =
+sys_info[['MAP_ID','ADA','RED','BLUE','G','BRN','P','Pexp','Y','Pnk','O']
+].groupby('MAP_ID').any()
+ridership = l_stops_df.drop(['STOP_ID', 'DIRECTION_ID', 'STOP_NAME',
+'ADA','RED','BLUE','G','BRN','P','Pexp','Y','Pnk','O'], axis=1) \
+    .merge(station_bools, how='left', left_on='MAP_ID',
+right_index=True).drop_duplicates()

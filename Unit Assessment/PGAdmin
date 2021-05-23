@@ -1,0 +1,33 @@
+DROP TABLE IF EXISTS players;
+CREATE TABLE players (
+	player_id INT NOT NULL,
+    first_name VARCHAR NOT NULL,
+    last_name VARCHAR NOT NULL,
+    hand VARCHAR NOT NULL,
+	country_code VARCHAR NOT NULL,
+PRIMARY KEY (player_id)
+);
+
+SELECT * FROM players;
+
+DROP TABLE IF EXISTS matches;
+CREATE TABLE matches (
+	loser_age DEC NOT NULL,
+    loser_id INT NOT NULL,
+    loser_name VARCHAR NOT NULL,
+    loser_rank int NOT NULL,
+	winner_age DEC NULL,
+    winner_id INT NOT NULL,
+    winner_name VARCHAR NOT NULL,
+    winner_rank int NOT NULL,
+FOREIGN KEY (loser_id) REFERENCES players (player_id),
+FOREIGN KEY (winner_id) REFERENCES players (player_id)
+);
+
+SELECT * FROM matches;
+
+SELECT COUNT (winner_name)
+FROM matches
+WHERE winner_name = 'Serena Williams';
+
+
